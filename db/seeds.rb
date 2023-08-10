@@ -5,3 +5,22 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+url = 'http://tmdb.lewagon.com/movie/top_rated'
+response = JSON.parse(URI.open(url).read)
+
+puts 'Clearing db'
+Movie.destroy_all
+
+puts 'Creating movies'
+response['results'].each do |movie_hash|
+  p movie_hash
+  # create an instance with the hash
+  Movie.create!(
+    poster_url: "https://image.tmdb.org/t/p/w500#{ movie_hash.poster_path }",
+    rating: movie_hash.vote_average.to_i,
+    title: movie_hash.original_title,
+    overview: movie_hash.overview
+  )
+end
+
+puts "Created! #{ Movie.count } movies :)"
