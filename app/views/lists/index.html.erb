@@ -14,6 +14,9 @@
   <% @lists.each do |list| %>
     <div class="card-category" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url(https://raw.githubusercontent.com/lewagon/fullstack-images/master/uikit/breakfast.jpg)">
       <%= link_to list.name, list_path(list), class: "text-decoration-none text-light" %>
+      <%= link_to list_path(list), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to remove #{list.name}" } do %>
+        <i class="fa-regular fa-trash-can m-2" style="color: #f0ffff;"></i>
+      <% end %>
     </div>
   <% end %>
 </div>

@@ -5,18 +5,20 @@
   </div>
 </div>
 <div class="container d-flex flex-column col-10">
-  <div class="cards my-4">
+  <div class="cards">
     <% @list.bookmarks.each do |bookmark| %>
-      <div class="card-product">
+      <div class="card-trip">
         <img src="<%= "#{bookmark.movie.poster_url}" %>" />
-        <div class="card-product-infos">
-          <h2><%= bookmark.movie.title %></h2>
-          <p><%= bookmark.movie.overview %></p>
-          <p>Rating: <%= bookmark.movie.rating %></p>
+        <div class="card-trip-infos">
+          <div>
+            <h2><%= bookmark.movie.title %></h2>
+            <p><%= bookmark.movie.overview %></p>
+          </div>
+          <h2 class="card-trip-pricing"><p>Rating: <%= bookmark.movie.rating %></p></h2>
+          <%= link_to bookmark_path(params = {bookmark_id: bookmark}), class: "card-trip-user avatar-bordered", data: {turbo_method: :delete, turbo_confirm: "Delete #{bookmark.movie.title}?"} do%>
+            <i class="fa-regular fa-trash-can m-2" style="color: #8e0b0b;"></i>
+          <% end %>
         </div>
-        <%= link_to list_bookmarks_path(bookmark), data: {turbo_method: :delete, turbo_confirm: "Delete #{bookmark.movie.title}?"} do%>
-          <i class="fa-regular fa-trash-can m-2" style="color: #8e0b0b;"></i>
-        <% end %>
       </div>
     <% end %>
   </div>

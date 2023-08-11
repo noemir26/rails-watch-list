@@ -11,16 +11,15 @@ response = JSON.parse(URI.open(url).read)
 puts 'Clearing db'
 Movie.destroy_all
 
-puts 'Creating movies'
+puts 'Creating movies ...'
 response['results'].each do |movie_hash|
-  p movie_hash
   # create an instance with the hash
   Movie.create!(
-    poster_url: "https://image.tmdb.org/t/p/w500#{ movie_hash.poster_path }",
-    rating: movie_hash.vote_average.to_i,
-    title: movie_hash.original_title,
-    overview: movie_hash.overview
+    poster_url: "https://image.tmdb.org/t/p/w500#{ movie_hash["poster_path"] }",
+    rating: movie_hash["vote_average"].to_i,
+    title: movie_hash["original_title"],
+    overview: movie_hash["overview"]
   )
 end
 
-puts "Created! #{ Movie.count } movies :)"
+puts "Created #{ Movie.count } movies! :)"
